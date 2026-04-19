@@ -5,7 +5,7 @@ namespace robot_controller_api.Persistence;
 public interface IRepository
 {
     const string CONNECTION_STRING =
-        "Host=localhost;Username=postgres;Password=prime;Database=sit331";
+        "Host=localhost;Username=postgres;Password=Pass123;Database=sit331";
 
     public List<T> ExecuteReader<T>(string sqlCommand, NpgsqlParameter[] dbParams = null)
         where T : class, new()

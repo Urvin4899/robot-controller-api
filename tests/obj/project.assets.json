@@ -8696,19 +8696,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tisha\\.nuget\\packages\\": {}
+    "C:\\Users\\sweed\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tisha\\OneDrive\\Desktop\\Sem4\\Professional Development\\HD\\robot-controller-api\\tests\\robot_controller_api.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\sweed\\Downloads\\New Compressed (zipped) Folder\\tests\\robot_controller_api.Tests.csproj",
       "projectName": "robot_controller_api.Tests",
-      "projectPath": "C:\\Users\\tisha\\OneDrive\\Desktop\\Sem4\\Professional Development\\HD\\robot-controller-api\\tests\\robot_controller_api.Tests.csproj",
-      "packagesPath": "C:\\Users\\tisha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tisha\\OneDrive\\Desktop\\Sem4\\Professional Development\\HD\\robot-controller-api\\tests\\obj\\",
+      "projectPath": "C:\\Users\\sweed\\Downloads\\New Compressed (zipped) Folder\\tests\\robot_controller_api.Tests.csproj",
+      "packagesPath": "C:\\Users\\sweed\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sweed\\Downloads\\New Compressed (zipped) Folder\\tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\tisha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sweed\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -8720,8 +8720,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\tisha\\OneDrive\\Desktop\\Sem4\\Professional Development\\HD\\robot-controller-api\\robot-controller-api.csproj": {
-              "projectPath": "C:\\Users\\tisha\\OneDrive\\Desktop\\Sem4\\Professional Development\\HD\\robot-controller-api\\robot-controller-api.csproj"
+            "C:\\Users\\sweed\\Downloads\\New Compressed (zipped) Folder\\robot-controller-api.csproj": {
+              "projectPath": "C:\\Users\\sweed\\Downloads\\New Compressed (zipped) Folder\\robot-controller-api.csproj"
             }
           }
         }
@@ -8803,7 +8803,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

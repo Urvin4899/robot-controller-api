@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ── Configuration ──────────────────────────────────────────────────────────
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
     ?? builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Host=localhost;Database=sit331;Username=postgres;Password=prime";
+    ?? "Host=localhost;Database=sit331;Username=postgres;Password=Pass123";
 
 // ── Services ───────────────────────────────────────────────────────────────
 builder.Services.AddControllers();

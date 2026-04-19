@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_DB:       sit331
       POSTGRES_USER:     postgres
-      POSTGRES_PASSWORD: prime
+      POSTGRES_PASSWORD: Pass123
     ports:
       - "5432:5432"
     volumes:
@@ -33,7 +33,7 @@ services:
     ports:
       - "8081:8080"
     environment:
-      DB_CONNECTION_STRING: "Host=postgres;Database=sit331;Username=postgres;Password=prime"
+      DB_CONNECTION_STRING: "Host=postgres;Database=sit331;Username=postgres;Password=Pass123"
       ASPNETCORE_ENVIRONMENT: Staging
     depends_on:
       postgres:
