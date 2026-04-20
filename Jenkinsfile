@@ -90,6 +90,7 @@ pipeline {
                 script {
                     try {
                         bat """
+                            set PATH=%PATH%;C:\\Users\\sweed\\AppData\\Roaming\\npm
                             snyk test --file=robot-controller-api.csproj --severity-threshold=high --json > snyk-results.json
                         """
                     } catch (Exception e) {
@@ -121,7 +122,7 @@ pipeline {
                 bat "ping -n 21 127.0.0.1 > nul"
                 script {
                     try {
-                        bat "curl -f http://localhost:8080/health/live"
+                        bat "curl -f http://localhost:8080/health"
                         echo "Staging deployment successful - API is healthy"
                     } catch (Exception e) {
                         echo "Health check pending - application may still be starting"
@@ -136,6 +137,8 @@ pipeline {
                 echo "Creating release version ${IMAGE_TAG}..."
                 script {
                     try {
+                        bat "git config --global user.email \"jenkins@robot-controller.com\""
+                        bat "git config --global user.name \"Jenkins\""
                         bat "git tag -a v${IMAGE_TAG} -m \"Release v${IMAGE_TAG} - Jenkins build #${BUILD_NUMBER}\""
                         bat "git push origin v${IMAGE_TAG}"
                         echo "Release tag v${IMAGE_TAG} created successfully"
