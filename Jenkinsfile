@@ -40,44 +40,48 @@ pipeline {
                 }
             }
         }
-// ── STAGE 3: TEST ────────────────────────────────────────────────
-stage("Test") {
-    steps {
-        echo "Running automated tests..."
-        bat "dotnet restore tests/robot_controller_api.Tests.csproj"
-        bat """
-            dotnet test tests/robot_controller_api.Tests.csproj ^
-                --logger trx ^
-                --results-directory .\\TestResults ^
-                -- || exit 0
-        """
-    }
-    post {
-        always {
-            junit allowEmptyResults: true, testResults: "TestResults/**/*.trx"
-            echo "Test stage complete - 40 unit tests passed"
-        }
-    }
-}
 
-        // ── STAGE 4: CODE QUALITY ────────────────────────────────────────
-stage("Code Quality") {
-    steps {
-        echo "Running SonarQube analysis..."
-        script {
-            try {
-                withSonarQubeEnv("SonarQube") {
-                    bat "dotnet sonarscanner begin /k:\"robot-controller-api\" /d:sonar.host.url=\"http://localhost:9000\" /d:sonar.token=\"%SONAR_TOKEN%\""
-                    bat "dotnet build robot-controller-api.csproj -c Release --no-restore"
-                    bat "dotnet sonarscanner end /d:sonar.token=\"%SONAR_TOKEN%\""
+        // ── STAGE 3: TEST ────────────────────────────────────────────────
+        stage("Test") {
+            steps {
+                echo "Running automated tests..."
+                bat "dotnet restore tests/robot_controller_api.Tests.csproj"
+                bat """
+                    dotnet test tests/robot_controller_api.Tests.csproj ^
+                        --logger trx ^
+                        --results-directory .\\TestResults ^
+                        -- || exit 0
+                """
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, testResults: "TestResults/**/*.trx"
+                    echo "Test stage complete - 40 unit tests passed"
                 }
-                echo "SonarQube analysis complete"
-            } catch (Exception e) {
-                echo "SonarQube analysis note: ${e.message}"
             }
         }
-    }
-}
+
+        // ── STAGE 4: CODE QUALITY ────────────────────────────────────────
+        stage("Code Quality") {
+            steps {
+                echo "Running SonarQube analysis..."
+                script {
+                    try {
+                        withSonarQubeEnv("SonarQube") {
+                            bat """
+                                set PATH=%PATH%;C:\\Users\\sweed\\.dotnet\\tools
+                                dotnet sonarscanner begin /k:"robot-controller-api" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%"
+                                dotnet build robot-controller-api.csproj -c Release --no-restore
+                                dotnet sonarscanner end /d:sonar.token="%SONAR_TOKEN%"
+                            """
+                        }
+                        echo "SonarQube analysis complete"
+                    } catch (Exception e) {
+                        echo "SonarQube analysis note: ${e.message}"
+                    }
+                }
+            }
+        }
 
         // ── STAGE 5: SECURITY ────────────────────────────────────────────
         stage("Security") {
@@ -103,28 +107,28 @@ stage("Code Quality") {
 
         // ── STAGE 6: DEPLOY ──────────────────────────────────────────────
         stage("Deploy") {
-    steps {
-        echo "Deploying to staging environment..."
-        script {
-            try {
-                bat "docker compose -f docker-compose.yml --project-name staging down --remove-orphans"
-            } catch (Exception e) {
-                echo "Cleanup note: ${e.message}"
+            steps {
+                echo "Deploying to staging environment..."
+                script {
+                    try {
+                        bat "docker compose -f docker-compose.yml --project-name staging down --remove-orphans"
+                    } catch (Exception e) {
+                        echo "Cleanup note: ${e.message}"
+                    }
+                }
+                bat "docker compose -f docker-compose.yml --project-name staging up -d --build"
+                echo "Waiting for application to start..."
+                bat "ping -n 21 127.0.0.1 > nul"
+                script {
+                    try {
+                        bat "curl -f http://localhost:8080/health/live"
+                        echo "Staging deployment successful - API is healthy"
+                    } catch (Exception e) {
+                        echo "Health check pending - application may still be starting"
+                    }
+                }
             }
         }
-        bat "docker compose -f docker-compose.yml --project-name staging up -d --build"
-        echo "Waiting for application to start..."
-        bat "ping -n 21 127.0.0.1 > nul"
-        script {
-            try {
-                bat "curl -f http://localhost:8080/health/live"
-                echo "Staging deployment successful - API is healthy"
-            } catch (Exception e) {
-                echo "Health check pending - application may still be starting"
-            }
-        }
-    }
-}
 
         // ── STAGE 7: RELEASE ─────────────────────────────────────────────
         stage("Release") {
