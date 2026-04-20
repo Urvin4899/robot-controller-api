@@ -140,7 +140,9 @@ pipeline {
                         bat "git config --global user.email \"jenkins@robot-controller.com\""
                         bat "git config --global user.name \"Jenkins\""
                         bat "git tag -a v${IMAGE_TAG} -m \"Release v${IMAGE_TAG} - Jenkins build #${BUILD_NUMBER}\""
-                        bat "git push origin v${IMAGE_TAG}"
+                        withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+                            bat "git push https://%GIT_USER%:%GIT_TOKEN%@github.com/Urvin4899/robot-controller-api.git v${IMAGE_TAG}"
+                        }
                         echo "Release tag v${IMAGE_TAG} created successfully"
                     } catch (Exception e) {
                         echo "Git tag note: ${e.message}"
