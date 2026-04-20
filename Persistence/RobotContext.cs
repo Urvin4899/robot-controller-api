@@ -21,7 +21,7 @@ public partial class RobotContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .UseNpgsql("Host=localhost;Database=sit331;Username=postgres;Password=Pass123")
+            .UseNpgsql("Host=postgres;Database=sit331;Username=postgres;Password=Pass123")
             .LogTo(Console.WriteLine)
             .EnableSensitiveDataLogging();
 
